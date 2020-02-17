@@ -436,6 +436,7 @@ index = {"subplots": "00_torch_core.ipynb",
          "AvgLoss": "13_learner.ipynb",
          "AvgSmoothLoss": "13_learner.ipynb",
          "Recorder": "13_learner.ipynb",
+         "FetchPreds": "13_learner.ipynb",
          "Learner.freeze_to": "13_learner.ipynb",
          "Learner.freeze": "13_learner.ipynb",
          "Learner.unfreeze": "13_learner.ipynb",
@@ -735,9 +736,12 @@ index = {"subplots": "00_torch_core.ipynb",
          "wandb_process": "70_callback.wandb.ipynb",
          "TensorBoardCallback": "71_callback.tensorboard.ipynb",
          "tensorboard_log": "71_callback.tensorboard.ipynb",
+         "NeptuneCallback": "72_callback.neptune.ipynb",
          "synth_dbunch": "97_test_utils.ipynb",
          "RegModel": "97_test_utils.ipynb",
-         "synth_learner": "97_test_utils.ipynb"}
+         "synth_learner": "97_test_utils.ipynb",
+         "PYTORCH_URL": "99_pytorch_doc.ipynb",
+         "pytorch_doc_link": "99_pytorch_doc.ipynb"}
 
 modules = ["torch_core.py",
            "layers.py",
@@ -783,10 +787,16 @@ modules = ["torch_core.py",
            "medical/text.py",
            "callback/wandb.py",
            "callback/tensorboard.py",
-           "test_utils.py"]
+           "callback/neptune.py",
+           "test_utils.py",
+           "_pytorch_doc.py"]
 
 doc_url = "https://dev.fast.ai/"
 
 git_url = "https://github.com/fastai/fastai2/tree/master/"
 
-def custom_doc_links(name): return None
+def custom_doc_links(name):
+    from nbdev.showdoc import try_external_doc_link
+    from ._pytorch_doc import pytorch_doc_link
+    l = try_external_doc_link(name, ['fastcore', 'nbdev'])
+    return pytorch_doc_link(name) if l is None else l
